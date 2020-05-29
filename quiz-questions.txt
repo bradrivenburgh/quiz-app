@@ -63,7 +63,7 @@ tasting wines from the same vintage //correct
 tasting wines made from the same varietal
 
 //10
-Which of the following grape varietals produces produces a red wine?
+Which of the following grape varietals can produce a red wine?
 albariño
 chardonnay
 tempranillo //correct
