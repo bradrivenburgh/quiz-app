@@ -1,0 +1,25 @@
+// The user is greeted with a welcome screen that includes
+// an opening message, image, and a "Start" button that 
+// launches the quiz.
+
+// The quiz then begins and displays the question number and
+// current score at the top, followed by the question and 
+// four answer choices with radio buttons as inputs. A submit
+// button is at the bottom of the screen.
+
+// A correct answer should generate a screen with a message indicating
+// the user is correct, a celebratory image, a feedback message, and 
+// a button that allows the user to proceed to the next question.
+
+// An incorrect message should generate a screen with a message 
+// indicating the user is incorrect, a negative image, a feedback 
+// message stating the correct answer, and a button that allows the 
+// user to proceed to the next question.
+
+// After answer all questions and passing (greater than half correct), 
+// the user is greeted with a celebratory message, a celebratory image,
+// their score, and a button to restart the quiz from the first question.
+
+// After answer all questions and failing (less than half correct), 
+// the user is greeted with a negative message, a negative image, 
+// their score, and a button to restart the quiz from the first question.
