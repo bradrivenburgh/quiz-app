@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Quiz App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+<!-- Opening view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main class="flex-group-column">
+        <div class="wrapper">
+            <p>How much do you know about wine and viticulture?</p>
+            <img src="#" alt="vineyard">
+            <p>
+                <button>Start</button>
+            </p>
+        </div>
+    </main>
+
+
+    <!-- Question view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main class="flex-group-column">
+        <div class="wrapper">
+            <section class="progress-tracker">
+                <p><span id="js-question-tracker">Question: # / 10</span><span id="js-score"> Score: #</span></p>
+            </section>
+            <section class="quiz-wrapper">
+                <p></p>    
+                <form action="" method="POST" class="js-form">
+                    <fieldset>
+                        <legend>What grape species is the vast majority of the world's wine made from?</legend>
+                        <input type="radio" name="answer#" value="answer">
+                            <label for="answer">vitis labrusca</label><br>
+                        <input type="radio" name="answer#" value="answer">
+                            <label for="answer">vitis riparia</label><br>
+                        <input type="radio" name="answer#" value="answer">
+                            <label for="answer">vitis vinifera</label><br>
+                        <input type="radio" name="answer#" value="answer">
+                            <label for="answer">vitis rotundifolia</label><br>
+                    </fieldset>
+                    <input type="submit" value="Submit">     
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Right answer view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main class="flex-group-column">
+        <div class="wrapper">
+            <section class="progress-tracker">
+                <p><span id="js-question-tracker">Question: # / 10</span><span id="js-score"> Score: #</span></p>
+            </section>
+              
+            <p>Cheers!  That's the right answer.</p>
+            <img src="#" alt="champagne flutes clinking in celebration">
+            <p>You must be an oenophile!</p>
+            <p>
+                <button>Next Question</button>
+            </p>
+        </div>
+    </main>
+
+    <!-- Wrong answer view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main class="flex-group-column">
+        <div class="wrapper">
+            <section class="progress-tracker">
+                <p><span id="js-question-tracker">Question: # / 10</span><span id="js-score"> Score: #</span></p>
+            </section>
+            
+            <p>That's the wrong answer.</p>
+            <img src="#" alt="cracked wine glass">
+            <p>The right answer was:</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+            <p>
+                <button>Next Question</button>
+            </p>
+        </div>
+    </main>
+
+    <!-- End quiz: passed view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main class="flex-group-column">
+    
+        <div class="wrapper">
+            <section class="progress-tracker">
+                <p><span id="js-question-tracker">Question: # / 10</span><span id="js-score"> Score: #</span></p>
+            </section>
+    
+            <p>You sure know a lot about wine!</p>
+            <img src="#" alt="champagne bottle popping its cork">
+            <p>Your score was # / 10</p>
+            <p>
+                <button>Restart Quiz</button>
+            </p>
+        </div>
+    </main>
+
+    <!-- End quiz: failed view -->
+
+    <header class="flex-group-row">
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+        <div class="flex-item-2"><h1>Wine Knowledge Quiz</h1></div>
+        <div class="flex-item-1"><img src="images/grape-cluster.svg" alt="grape cluster"></div>
+    </header>
+
+    <main>
+        
+        <div class="wrapper flex-group-column">
+            <section class="progress-tracker">
+                <p><span id="js-question-tracker">Question: # / 10</span><span id="js-score"> Score: #</span></p>
+            </section>
+
+            <p>You must be more of a beer person...</p>
+            <img src="#" alt="image of generic beer can">
+            <p>Your score was # / 10</p>
+            <p>
+                <button>Restart Quiz</button>
+            </p>
+        </div>
+    </main>
+
+
+    <script src="index.js"></script>
+</body>
+</html>
