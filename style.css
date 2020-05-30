@@ -29,7 +29,15 @@ span {
     font-weight: 700;
 }
 
+main {
+    margin-top: 25px;
+}
+
 /* ----Header----*/
+
+header {
+    margin-top: 25px;
+}
 
 .flex-group-row {
     display: flex;

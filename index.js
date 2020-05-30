@@ -10,7 +10,7 @@ const STORE = [
         option2: "table wine, sparkling wine, fortified wine",
         option3: "expensive wine, cheap wine, two-buck chuck",
         option4: "French wine, Italian wine, Argentinian wine",
-        answer: option2
+        answer: 'option2'
     },
     //2
     {
@@ -19,7 +19,7 @@ const STORE = [
         option2: "vitis riparia",
         option3: "vitis vinifera",
         option4: "vitis rotundifolia",
-        answer: option3
+        answer: 'option3'
     },
     //3
     {
@@ -28,7 +28,7 @@ const STORE = [
         option2: "Spain",
         option3: "France",
         option4: "China",
-        answer: option1
+        answer: 'option1'
     },
     //4
     {
@@ -37,7 +37,7 @@ const STORE = [
         option2: "wine will increase HDL and decrease LDL cholesterol when consumed in moderation",
         option3: "the formula for fermentation is sugar + yeast = alcohol + carbon dioxide",
         option4: "table wines have between 17 and 22 percent alcohol",
-        answer: option4
+        answer: 'option4'
     },
     //5
     {
@@ -46,7 +46,7 @@ const STORE = [
         option2: "the measure of sugar in grapes",
         option3: "the measure of yeast mixed into the wine juice",
         option4: "the name of concrete tanks used to age wine",
-        answer: option2
+        answer: 'option2'
     },
     //6
     {
@@ -55,7 +55,7 @@ const STORE = [
         option2: "March through May",
         option3: "May through July",
         option4: "August through October",
-        answer: option4
+        answer: 'option4'
     },
     //7
     {
@@ -64,7 +64,7 @@ const STORE = [
         option2: "food coloring",
         option3: "the yeast used in fermentation",
         option4: "the grape flesh",
-        answer: option1
+        answer: 'option1'
     },
     //8
     {
@@ -73,7 +73,7 @@ const STORE = [
         option2: "the volume of wine produced by a winery in a given year",
         option3: "the year the wine was produced",
         option4: "the amount of dust on bottle",
-        answer: option3
+        answer: "option3"
     },
     //9
     {
@@ -82,7 +82,7 @@ const STORE = [
         option2: "tasting wines from the same region",
         option3: "tasting wines from the same vintage",
         option4: "tasting wines made from the same varietal",
-        answer: option3
+        answer: "option3"
     },
     //10
     {
@@ -91,87 +91,189 @@ const STORE = [
         option2: "chardonnay",
         option3: "tempranillo",
         option4: "riesling",
-        answer: option3
-    },
-    // Progress Tracker
-    {
-        currentQuestion: ,
-        score: 
+        answer: "option3"
     }
 ];
 
+// Progress Tracker variables
+let currentQuestion = 0;
+let score = 0;
 
-// Click the start button to begin quiz
 
+// ----------
+// Start the quiz
 function startQuiz() {
-    console.log('startQuiz() ran');
     $('#js-start').click(event => {
+        console.log('startQuiz() ran');
         renderQuestion();
     });
 }
 
-// Render the progress-tracker and first quiz question
-
-function renderQuestion() {
-    console.log('renderQuestion() ran');
-    
+// Get the progress tracker and question template and populate it from STORE
+function getQuestion(STORE, currentQuestion, score) {
+    return `<section class="progress-tracker">
+    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span><span id="js-score"> Score: ${score}</span>
+</section>
+<section class="js-quiz-wrapper">
+    <form action="" method="POST" class="js-form">
+        <fieldset>
+            <legend>${STORE[currentQuestion].question}</legend>
+            <input id="option1" type="radio" name="answer" value="option1">
+            <label for="option1">${STORE[currentQuestion].option1}</label><br>
+            <input id="option2" type="radio" name="answer" value="option2">
+            <label for="option2">${STORE[currentQuestion].option2}</label><br>
+            <input id="option3" type="radio" name="answer" value="option3">
+            <label for="option3">${STORE[currentQuestion].option3}</label><br>
+            <input id="option4" type="radio" name="answer" value="option4">
+            <label for="option4">${STORE[currentQuestion].option4}</label><br>
+        </fieldset>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+`
 }
 
+// Render the question to the html document
+function renderQuestion() {
+    $('.wrapper').html(getQuestion(STORE, currentQuestion, score));
+        console.log('renderQuestion() ran');
+}
+
+//Update Progress tracker
+
+function updateQuestionNumber() {
+    console.log('updateQuestionNumber() ran');
+    currentQuestion++;
+}
+
+function updateScore() {
+    score++;
+}
+
+// ----------
 // Submit answer and check if it is correct; prevent submission
-// of an empty form.
+// of an empty form. 
+
+function checkAnswer(event) {
+    let correctAnswer = STORE[currentQuestion][STORE[currentQuestion].answer];
+    
+    if ($("input[name='answer']:checked").val() === undefined) {
+        alert("Make a selection");
+    } else if ($("input[name='answer']:checked").val() != STORE[currentQuestion].answer) {
+        renderIncorrect(correctAnswer);
+    } else {
+        updateScore();
+        renderCorrect();
+    }
+    console.log('checkAnswer() ran')
+}
 
 function submitAnswer() {
-    console.log('submitAnswer() ran');
+    $('.wrapper').submit(function(event) {
+        event.preventDefault();
+        console.log('submitAnswer() ran');
+        checkAnswer(event);        
+    });
 }
 
-// Update progress tracker
-
-function updateProgressTracker() {
-    console.log('updateProgressTracker() ran');
-}
 
 // Display either correct or incorrect content
 
 function renderCorrect() {
+    $('.wrapper').html(`            
+    <section class="progress-tracker">
+    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span><span id="js-score"> Score: ${score}</span>
+    </section>
+    <p>Cheers! That's the right answer.</p>
+    <img src="images/cheers-correct.svg" alt="champagne flutes clinking in celebration">
+    <p>You might be an oenophile!</p>
+    <p>
+        <button id="js-nextQ">Next Question</button>
+    </p>
+`);
     console.log('renderCorrect() ran');
+    renderNextQuestion();
 }
 
-function renderIncorrect() {
+function renderIncorrect(correctAnswer) {
+    $('.wrapper').html(`            
+    <section class="progress-tracker">
+    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span><span id="js-score"> Score: ${score}</span>
+    </section>
+    <p>That's the wrong answer.</p>
+    <img src="images/broken-glass-incorrect.png" alt="cracked wine glass">
+    <p>The right answer was:</p>
+    <p>${correctAnswer}</p>
+    <p>
+        <button id="js-nextQ">Next Question</button>
+    </p>
+`);
     console.log('renderIncorrect() ran');
+    renderNextQuestion();
 }
 
 // Click on the next question button to proceed to the next question
 
 function renderNextQuestion() {
+    $('#js-nextQ').click(event => { 
+        ((currentQuestion + 1) <= STORE.length) ? renderQuestion() : renderResults();
+    });
+
+    updateQuestionNumber();
     console.log('renderNextQuestion() ran');
 }
-
-// Repeat steps 3-7 until all 10 questions have been answered
 
 // Display the pass (greater than 60% correct) or fail (less 
 // than 60% correct) content that includes a reset button
 
 function renderResults() {
+    if (score >= 6) {
+        $('.wrapper').html(
+            `<section class="progress-tracker">
+            <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span><span id="js-score"> Score: ${score}</span>
+            </section>
+        
+            <p>You sure know a lot about wine!</p>
+            <img src="images/champagne-win.svg" alt="champagne bottle popping its cork">
+            <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
+            <p>
+                <button id="js-restart" type="button">Restart Quiz</button>
+            </p>`
+        );
+    } else {
+        $('.wrapper').html(
+            `<section class="progress-tracker">
+            <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span><span id="js-score"> Score: ${score}</span>
+            </section>
+        
+            <p>You must be more of a beer person...</p>
+            <img src="images/beer-lose.svg" alt="image of generic beer can">
+            <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
+            <p>
+                <button id="js-restart" type="button">Restart Quiz</button>
+            </p>`
+            );
+    }
     console.log('renderResults() ran');
+    restartQuiz();
+
 }
 
 // If the user clicks the reset button reset their data and load
 // the first question
 
-function resetQuiz() {
+function restartQuiz() {
+    $('#js-restart').click(event => {
+        currentQuestion = 0;
+        score = 0;
+        renderQuestion();
+    });
     console.log('resetQuiz() ran');
 }
 
 function handleQuiz() {
     startQuiz();
-    renderQuestion();
     submitAnswer();
-    updateProgressTracker();
-    renderCorrect();
-    renderIncorrect();
-    renderNextQuestion();
-    renderResults();
-    resetQuiz();
 }
 
 $(handleQuiz);
