@@ -37,7 +37,7 @@ legend {
     font-size: 1.2rem;
 }
 
-.progress-tracker {
+.js-progress-tracker {
     font-weight: 700;
 }
 
@@ -156,7 +156,7 @@ main {
     box-shadow: 0 0 10px rgba(148, 86, 86, 0.781);
 }
 
-.progress-tracker {
+.js-progress-tracker {
     display: block;
     margin: 1rem 0;
 }

@@ -118,7 +118,7 @@ function renderQuestion() {
 // Render the question template and populate it with data from the STORE array
 function getQuestion(STORE, currentQuestion, score) {
     return `
-    <section class="progress-tracker">
+    <section class="js-progress-tracker">
     <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span>
     <span id="js-score"> Score: ${score}</span>
 </section>
@@ -201,7 +201,7 @@ function renderCorrect() {
 // Display an 'incorrect answer' screen if submitted answer is incorrect; increment question number
 function renderIncorrect(correctAnswer) {
     $('.wrapper').html(`            
-    <section class="progress-tracker">
+    <section class="js-progress-tracker">
     <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span>
     <span id="js-score"> Score: ${score}</span>
     </section>
@@ -226,7 +226,7 @@ function renderNextQuestion() {
 function renderResults() {
     if (score >= 6) {
         $('.wrapper').html(
-            `<section class="progress-tracker">
+            `<section class="js-progress-tracker">
             <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span>
             <span id="js-score"> Score: ${score}</span>
             </section>
@@ -238,7 +238,7 @@ function renderResults() {
             `);
     } else {
         $('.wrapper').html(
-            `<section class="progress-tracker">
+            `<section class="js-progress-tracker">
             <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span>
             <span id="js-score"> Score: ${score}</span>
             </section>
