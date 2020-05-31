@@ -193,9 +193,7 @@ function renderCorrect() {
     <p>Cheers! That's the right answer.</p>
     <img src="images/cheers-correct.svg" alt="champagne flutes clinking in celebration">
     <p>You might be an oenophile!</p>
-    <p>
-        <button id="js-nextQ">Next Question</button>
-    </p>
+    <button id="js-nextQ">Next Question</button>
 `);
     updateQuestionNumber();
 }
@@ -211,9 +209,7 @@ function renderIncorrect(correctAnswer) {
     <img src="images/broken-glass-incorrect.png" alt="cracked wine glass">
     <p>The right answer was:</p>
     <p><em>${correctAnswer}</em></p>
-    <p>
-        <button id="js-nextQ">Next Question</button>
-    </p>
+    <button id="js-nextQ">Next Question</button>
 `);
     updateQuestionNumber();
 }
@@ -238,10 +234,8 @@ function renderResults() {
             <p>You sure know a lot about wine!</p>
             <img src="images/champagne-win.svg" alt="champagne bottle popping its cork">
             <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
-            <p>
-                <button id="js-restart" type="button">Restart Quiz</button>
-            </p>`
-        );
+            <button id="js-restart" type="button">Restart Quiz</button>
+            `);
     } else {
         $('.wrapper').html(
             `<section class="progress-tracker">
@@ -252,10 +246,8 @@ function renderResults() {
             <p>You must be more of a beer person...</p>
             <img src="images/beer-lose.svg" alt="image of generic beer can">
             <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
-            <p>
-                <button id="js-restart" type="button">Restart Quiz</button>
-            </p>`
-            );
+            <button id="js-restart" type="button">Restart Quiz</button>
+            `);
     }
 }
 
