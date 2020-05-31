@@ -1,7 +1,8 @@
 'use strict';
 
-// Store questions and progress tracker data here
+// ----DATA----
 
+// The questions, answer choices, and correct answer are stored here
 const STORE = [
     //1
     {
@@ -95,27 +96,26 @@ const STORE = [
     }
 ];
 
-// Progress Tracker variables
+// Progress Tracker: Track currecnt question number and score
 let currentQuestion = 0;
 let score = 0;
 
-// ----------
+
+// ----Functions----
 
 // Start the quiz
 function startQuiz() {
     $('#js-start').click(event => {
-        console.log('startQuiz() ran');
         renderQuestion();
     });
 }
 
-// Render the question to the html document
+// Render a question to the html document
 function renderQuestion() {
     $('.wrapper').html(getQuestion(STORE, currentQuestion, score));
-        console.log('renderQuestion() ran');
 }
 
-// Render the question template and populate it from the STORE array
+// Render the question template and populate it with data from the STORE array
 function getQuestion(STORE, currentQuestion, score) {
     return `
     <section class="progress-tracker">
@@ -150,9 +150,9 @@ function getQuestion(STORE, currentQuestion, score) {
 }
 
 // Update Progress tracker data
+
 // Increment the question number
 function updateQuestionNumber() {
-    console.log('updateQuestionNumber() ran');
     currentQuestion++;
 }
 
@@ -161,15 +161,15 @@ function updateScore() {
     score++;
 }
 
+// Submit the answer
 function submitAnswer() {
     $('.wrapper').submit(function(event) {
         event.preventDefault();
-        console.log('submitAnswer() ran');
         checkAnswer(event);        
     });
 }
 
-// Submit answer and check if it is correct; prevent submission of an empty input. 
+// Check if it is correct; prevent submission of an empty input. 
 function checkAnswer(event) {
     let correctAnswer = STORE[currentQuestion][STORE[currentQuestion].answer];
     
@@ -181,10 +181,9 @@ function checkAnswer(event) {
         updateScore();
         renderCorrect();
     }
-    console.log('checkAnswer() ran')
 }
 
-// Display a 'correct answer' screen if submitted answer is correct
+// Display a 'correct answer' screen if submitted answer is correct; increment question number
 function renderCorrect() {
     $('.wrapper').html(`            
     <section class="progress-tracker">
@@ -198,11 +197,10 @@ function renderCorrect() {
         <button id="js-nextQ">Next Question</button>
     </p>
 `);
-    console.log('renderCorrect() ran');
-    renderNextQuestion();
+    updateQuestionNumber();
 }
 
-// Display an 'incorrect answer' screen if submitted answer is incorrect
+// Display an 'incorrect answer' screen if submitted answer is incorrect; increment question number
 function renderIncorrect(correctAnswer) {
     $('.wrapper').html(`            
     <section class="progress-tracker">
@@ -217,22 +215,18 @@ function renderIncorrect(correctAnswer) {
         <button id="js-nextQ">Next Question</button>
     </p>
 `);
-    console.log('renderIncorrect() ran');
-    renderNextQuestion();
+    updateQuestionNumber();
 }
 
 // Proceed to the next question or end quiz and display results if no questions are left
 function renderNextQuestion() {
-    $('#js-nextQ').click(event => { 
+    $('.wrapper').on('click', '#js-nextQ', event => { 
         ((currentQuestion + 1) <= STORE.length) ? renderQuestion() : renderResults();
     });
-
-    updateQuestionNumber();
-    console.log('renderNextQuestion() ran');
 }
 
 // Render the results content. Display the pass screen if the score is greater than or equal to 60%. 
-// Display the fail screen if the score is less than 60%.  Provide a reset option. 
+// Display the fail screen if the score is less than 60%.  Provide a reset button. 
 function renderResults() {
     if (score >= 6) {
         $('.wrapper').html(
@@ -263,25 +257,23 @@ function renderResults() {
             </p>`
             );
     }
-    console.log('renderResults() ran');
-    restartQuiz();
-
 }
 
-// Reset the quiz if the restart button is pressed
+// Reset the quiz
 function restartQuiz() {
-    $('#js-restart').click(event => {
+    $('.wrapper').on('click', '#js-restart', event => {
         currentQuestion = 0;
         score = 0;
         renderQuestion();
     });
-    console.log('resetQuiz() ran');
 }
 
-// Function starts the quiz and allows for answer submission
+// Calls primary functions to run quiz
 function handleQuiz() {
     startQuiz();
     submitAnswer();
+    renderNextQuestion();
+    restartQuiz();
 }
 
 $(handleQuiz);
