@@ -1,13 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&display=swap');
 
-* {
+html {
     box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
     margin: 0;
-}
+  }
+
 
 body {
+    background-color: rgb(223, 208, 140);
+}
+
+.wrapper {
     background-color: rgb(240, 226, 180);
 }
+
 
 /* ----General Fonts---- */
 
