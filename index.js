@@ -2,8 +2,9 @@
 
 // ----DATA----
 
-// The questions, answer choices, and correct answer are stored here
-const STORE = [
+// Global object that stores questions, answer choices, correct answers, and the progress tracker
+const STORE = {
+    questions: [
     //1
     {
         question: "What are the three major types of wine?",
@@ -94,11 +95,10 @@ const STORE = [
         option4: "riesling",
         answer: "option3"
     }
-];
-
-// Progress Tracker: Track currecnt question number and score
-let currentQuestion = 0;
-let score = 0;
+    ],
+    currentQuestion: 0,
+    score: 0
+};
 
 
 // ----Functions----
@@ -112,35 +112,35 @@ function startQuiz() {
 
 // Render a question to the html document
 function renderQuestion() {
-    $('.wrapper').html(getQuestion(STORE, currentQuestion, score));
+    $('.wrapper').html(getQuestion(STORE));
 }
 
 // Render the question template and populate it with data from the STORE array
-function getQuestion(STORE, currentQuestion, score) {
+function getQuestion(STORE) {
     return `
     <section class="js-progress-tracker">
-    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span>
-    <span id="js-score"> Score: ${score}</span>
+    <span id="js-question-tracker">Question: ${STORE.currentQuestion + 1} / ${STORE.questions.length}</span>
+    <span id="js-score"> Score: ${STORE.score}</span>
 </section>
 <section class="js-quiz-wrapper">
     <form action="" method="POST" class="js-form">
         <fieldset>
-            <legend>${STORE[currentQuestion].question}</legend>
+            <legend>${STORE.questions[STORE.currentQuestion].question}</legend>
                 <span class="flex-input">
                     <input id="option1" type="radio" name="answer" value="option1">
-                    <label for="option1">${STORE[currentQuestion].option1}</label>
+                    <label for="option1">${STORE.questions[STORE.currentQuestion].option1}</label>
                 </span>
                 <span class="flex-input">
                     <input id="option2" type="radio" name="answer" value="option2">
-                    <label for="option2">${STORE[currentQuestion].option2}</label>
+                    <label for="option2">${STORE.questions[STORE.currentQuestion].option2}</label>
                 </span>
                 <span class="flex-input">
                     <input id="option3" type="radio" name="answer" value="option3">
-                    <label for="option3">${STORE[currentQuestion].option3}</label>
+                    <label for="option3">${STORE.questions[STORE.currentQuestion].option3}</label>
                 </span>
                 <span class="flex-input">
                     <input id="option4" type="radio" name="answer" value="option4">
-                    <label for="option4">${STORE[currentQuestion].option4}</label>
+                    <label for="option4">${STORE.questions[STORE.currentQuestion].option4}</label>
                 </span>
         </fieldset>
         <button type="submit">Submit</button>
@@ -153,12 +153,12 @@ function getQuestion(STORE, currentQuestion, score) {
 
 // Increment the question number
 function updateQuestionNumber() {
-    currentQuestion++;
+    STORE.currentQuestion++;
 }
 
 // Increment the score
 function updateScore() {
-    score++;
+    STORE.score++;
 }
 
 // Submit the answer
@@ -171,11 +171,11 @@ function submitAnswer() {
 
 // Check if it is correct; prevent submission of an empty input. 
 function checkAnswer(event) {
-    let correctAnswer = STORE[currentQuestion][STORE[currentQuestion].answer];
+    let correctAnswer = STORE.questions[STORE.currentQuestion].answer;
     
     if ($("input[name='answer']:checked").val() === undefined) {
         alert("Please select an answer");
-    } else if ($("input[name='answer']:checked").val() != STORE[currentQuestion].answer) {
+    } else if ($("input[name='answer']:checked").val() != correctAnswer) {
         renderIncorrect(correctAnswer);
     } else {
         updateScore();
@@ -186,9 +186,9 @@ function checkAnswer(event) {
 // Display a 'correct answer' screen if submitted answer is correct; increment question number
 function renderCorrect() {
     $('.wrapper').html(`            
-    <section class="progress-tracker">
-    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span>
-    <span id="js-score"> Score: ${score}</span>
+    <section class="js-progress-tracker">
+    <span id="js-question-tracker">Question: ${STORE.currentQuestion + 1} / ${STORE.questions.length}</span>
+    <span id="js-score"> Score: ${STORE.score}</span>
     </section>
     <p>Cheers! That's the right answer.</p>
     <img src="images/cheers-correct.svg" alt="champagne flutes clinking in celebration">
@@ -202,13 +202,13 @@ function renderCorrect() {
 function renderIncorrect(correctAnswer) {
     $('.wrapper').html(`            
     <section class="js-progress-tracker">
-    <span id="js-question-tracker">Question: ${currentQuestion + 1} / ${STORE.length}</span>
-    <span id="js-score"> Score: ${score}</span>
+    <span id="js-question-tracker">Question: ${STORE.currentQuestion + 1} / ${STORE.questions.length}</span>
+    <span id="js-score"> Score: ${STORE.score}</span>
     </section>
     <p>That's the wrong answer.</p>
     <img src="images/broken-glass-incorrect.png" alt="cracked wine glass">
     <p>The right answer was:</p>
-    <p><em>${correctAnswer}</em></p>
+    <p><em>${STORE.questions[STORE.currentQuestion][correctAnswer]}</em></p>
     <button id="js-nextQ">Next Question</button>
 `);
     updateQuestionNumber();
@@ -217,35 +217,35 @@ function renderIncorrect(correctAnswer) {
 // Proceed to the next question or end quiz and display results if no questions are left
 function renderNextQuestion() {
     $('.wrapper').on('click', '#js-nextQ', event => { 
-        ((currentQuestion + 1) <= STORE.length) ? renderQuestion() : renderResults();
+        ((STORE.currentQuestion + 1) <= STORE.questions.length) ? renderQuestion() : renderResults();
     });
 }
 
 // Render the results content. Display the pass screen if the score is greater than or equal to 60%. 
 // Display the fail screen if the score is less than 60%.  Provide a reset button. 
 function renderResults() {
-    if (score >= 6) {
+    if (STORE.score >= 6) {
         $('.wrapper').html(
             `<section class="js-progress-tracker">
-            <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span>
-            <span id="js-score"> Score: ${score}</span>
+            <span id="js-question-tracker">Question: ${STORE.currentQuestion} / ${STORE.questions.length}</span>
+            <span id="js-score"> Score: ${STORE.score}</span>
             </section>
         
             <p>You sure know a lot about wine!</p>
             <img src="images/champagne-win.svg" alt="champagne bottle popping its cork">
-            <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
+            <p>Your score was <span id="js-score">${STORE.score} / ${STORE.questions.length}</span></p>
             <button id="js-restart" type="button">Restart Quiz</button>
             `);
     } else {
         $('.wrapper').html(
             `<section class="js-progress-tracker">
-            <span id="js-question-tracker">Question: ${currentQuestion} / ${STORE.length}</span>
-            <span id="js-score"> Score: ${score}</span>
+            <span id="js-question-tracker">Question: ${STORE.currentQuestion} / ${STORE.questions.length}</span>
+            <span id="js-score"> Score: ${STORE.score}</span>
             </section>
         
             <p>You must be more of a beer person...</p>
             <img src="images/beer-lose.svg" alt="image of generic beer can">
-            <p>Your score was <span id="js-score">${score} / ${STORE.length}</span></p>
+            <p>Your score was <span id="js-score">${STORE.score} / ${STORE.questions.length}</span></p>
             <button id="js-restart" type="button">Restart Quiz</button>
             `);
     }
@@ -254,8 +254,8 @@ function renderResults() {
 // Reset the quiz
 function restartQuiz() {
     $('.wrapper').on('click', '#js-restart', event => {
-        currentQuestion = 0;
-        score = 0;
+        STORE.currentQuestion = 0;
+        STORE.score = 0;
         renderQuestion();
     });
 }
