@@ -96,6 +96,7 @@ const STORE = {
         answer: "option3"
     }
     ],
+    //Progress tracker data
     currentQuestion: 0,
     score: 0
 };
