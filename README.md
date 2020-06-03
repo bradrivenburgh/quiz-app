@@ -13,5 +13,3 @@ Users are presented with ten multiple choice questions about wine and viticultur
 ## Installation
 
 Download the project files and open the index.html file in your browser to get started!
-
-
